@@ -1,0 +1,31 @@
+﻿@model SalonBookingSystem.Models.User
+@{
+    ViewData["Title"] = "Личный кабинет";
+}
+
+<h2>Профиль</h2>
+<p><strong>Имя:</strong> @Model.FirstName @Model.LastName</p>
+<p><strong>Телефон:</strong> @Model.Phone</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Дата регистрации:</strong> @Model.RegisteredAt.ToString("dd.MM.yyyy")</p>
+
+<h4>Привязка Telegram</h4>
+@if (Model.TelegramChatId == null)
+{
+    <form asp-action="LinkTelegram" method="post">
+        <div class="form-group">
+            <label>Введите ваш Telegram Chat ID (можно узнать у @@Getmyid_bot)</label>
+            <input type="text" name="chatId" class="form-control" />
+        </div>
+        <button class="btn btn-primary">Привязать</button>
+    </form>
+}
+else
+{
+    <p>Telegram привязан. Chat ID: @Model.TelegramChatId</p>
+    <form asp-action="UnlinkTelegram" method="post">
+        <button class="btn btn-warning">Отвязать</button>
+    </form>
+}
+
+<a asp-action="Logout" class="btn btn-danger mt-3">Выйти</a>

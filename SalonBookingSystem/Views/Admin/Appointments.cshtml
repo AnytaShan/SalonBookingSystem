@@ -1,0 +1,73 @@
+﻿@model IEnumerable<SalonBookingSystem.Models.Appointment>
+@{
+    ViewData["Title"] = "Записи клиентов";
+}
+<h2>Записи клиентов</h2>
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-2">
+        <label>Дата с</label>
+        <input type="date" name="dateFrom" class="form-control" value="@Context.Request.Query["dateFrom"]" />
+    </div>
+    <div class="col-md-2">
+        <label>Дата по</label>
+        <input type="date" name="dateTo" class="form-control" value="@Context.Request.Query["dateTo"]" />
+    </div>
+    <div class="col-md-2">
+        <label>Услуга</label>
+        <select name="serviceId" asp-items="ViewBag.Services" class="form-control"><option value="">Все</option></select>
+    </div>
+    <div class="col-md-2">
+        <label>Специалист</label>
+        <select name="specialistId" asp-items="ViewBag.Specialists" class="form-control"><option value="">Все</option></select>
+    </div>
+    <div class="col-md-2">
+        <label>Клиент</label>
+        <input type="text" name="clientName" class="form-control" value="@Context.Request.Query["clientName"]" />
+    </div>
+    <div class="col-md-1 align-self-end">
+        <button class="btn btn-primary">Фильтр</button>
+    </div>
+</form>
+<table>
+    <tbody>
+        @foreach (var app in Model)
+        {
+            <tr>
+                <td>@app.User.LastName @app.User.FirstName (@app.User.Phone)</td>
+                <td>@app.Service.Name</td>
+                <td>@app.Specialist.LastName @app.Specialist.FirstName</td>
+                <td>@app.StartTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>
+                    @switch (app.Status)
+                    {
+                        case AppointmentStatus.Confirmed:
+                            <span class="badge bg-success">Подтверждена</span>
+                            break;
+                        case AppointmentStatus.Canceled:
+                            <span class="badge bg-secondary">Отменена</span>
+                            break;
+                        case AppointmentStatus.Completed:
+                            <span class="badge bg-info">Выполнена</span>
+                            break;
+                    }
+                </td>
+                <td>
+                    @if (app.Status == AppointmentStatus.Confirmed)
+                    {
+                        <form method="post" asp-action="CancelAppointment" style="display:inline;">
+                            <input type="hidden" name="id" value="@app.Id" />
+                            <button type="submit" class="btn btn-sm btn-warning">Отменить</button>
+                        </form>
+                    }
+                    @if (app.Status != AppointmentStatus.Completed)
+                    {
+                        <form method="post" asp-action="CompleteAppointment" style="display:inline;">
+                            <input type="hidden" name="id" value="@app.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Завершить</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

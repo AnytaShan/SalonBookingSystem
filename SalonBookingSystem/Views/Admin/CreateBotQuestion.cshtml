@@ -1,0 +1,22 @@
+﻿@model SalonBookingSystem.Models.BotQuestion
+@{
+    ViewData["Title"] = "Добавление вопроса-ответа";
+}
+
+<h2>Новый ответ бота</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Keywords" class="form-label"></label>
+        <input asp-for="Keywords" class="form-control" placeholder="Например: привет,здравствуйте" />
+        <small class="text-muted">Ключевые слова через запятую, по которым будет срабатывать ответ.</small>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Answer" class="form-label"></label>
+        <textarea asp-for="Answer" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="mb-3 form-check">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

@@ -1,0 +1,13 @@
+﻿@model SalonBookingSystem.Models.Service
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+<p><strong>Цена:</strong> @Model.Price.ToString("C")</p>
+<p><strong>Длительность:</strong> @Model.DurationMinutes минут</p>
+
+<a asp-action="SelectSpecialist" asp-controller="Appointments" asp-route-serviceId="@Model.Id" class="btn btn-success">Записаться на эту услугу</a>
+<a asp-action="Index" class="btn btn-secondary">Назад к списку</a>

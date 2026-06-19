@@ -1,0 +1,44 @@
+﻿@model List<DateTime>
+@{
+    ViewData["Title"] = "Выбор времени";
+    var service = (Service)ViewBag.Service;
+    var specialist = (Specialist)ViewBag.Specialist;
+    var slots = Model as List<DateTime>;
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<h2>Выберите удобное время</h2>
+<p><strong>Услуга:</strong> @service.Name</p>
+<p><strong>Специалист:</strong> @specialist.LastName @specialist.FirstName</p>
+<p><strong>Длительность:</strong> @service.DurationMinutes мин.</p>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="alert alert-warning">На ближайшие 14 дней нет свободных окон для записи.</div>
+}
+else
+{
+    <form method="post" asp-action="Create">
+      @Html.AntiForgeryToken()
+        <input type="hidden" name="serviceId" value="@service.Id" />
+        <input type="hidden" name="specialistId" value="@specialist.Id" />
+        <div class="mb-3">
+            <label for="startTime" class="form-label">Выберите время:</label>
+            <select name="startTime" id="startTime" class="form-select" required>
+                @foreach (var slot in Model)
+                {
+                    <option value="@slot.ToString("yyyy-MM-dd HH:mm")">@slot.ToString("dd.MM.yyyy HH:mm")</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="note" class="form-label">Примечание (пожелания):</label>
+            <textarea name="note" id="note" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Подтвердить запись</button>
+    </form>
+}

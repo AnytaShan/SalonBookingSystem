@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Панель администратора";
+}
+
+<h2>Панель управления</h2>
+<div class="row mt-4">
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Услуги</h5>
+                <p class="card-text">Управление списком услуг, ценами и длительностью.</p>
+                <a asp-action="Services" class="btn btn-primary">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Специалисты</h5>
+                <p class="card-text">Редактирование информации о специалистах, расписания.</p>
+                <a asp-action="Specialists" class="btn btn-primary">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Чат-бот</h5>
+                <p class="card-text">Управление вопросами и ответами виртуального помощника.</p>
+                <a asp-action="BotQuestions" class="btn btn-primary">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Записи</h5>
+                <p class="card-text">Просмотр всех записей клиентов, изменение статусов.</p>
+                <a asp-action="Appointments" class="btn btn-primary">Перейти</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4 mb-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Пользователи</h5>
+            <p class="card-text">Управление учётными записями сотрудников и администраторов.</p>
+            <a asp-action="Users" class="btn btn-primary">Перейти</a>
+        </div>
+    </div>
+</div>

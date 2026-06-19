@@ -1,0 +1,25 @@
+﻿@model IEnumerable<SalonBookingSystem.Models.Specialist>
+@{
+    ViewData["Title"] = "Наши специалисты";
+}
+
+<h2>Наши специалисты</h2>
+
+<div class="row">
+    @foreach (var specialist in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@specialist.LastName @specialist.FirstName @specialist.MiddleName</h5>
+                    <p class="card-text">@specialist.Bio</p>
+                    @if (specialist.SpecialistServices != null && specialist.SpecialistServices.Any())
+                    {
+                        <p><strong>Услуги:</strong> @string.Join(", ", specialist.SpecialistServices.Select(ss => ss.Service.Name))</p>
+                    }
+                    <a asp-action="Details" asp-route-id="@specialist.Id" class="btn btn-outline-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

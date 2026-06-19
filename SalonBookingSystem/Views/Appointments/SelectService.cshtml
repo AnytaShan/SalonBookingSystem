@@ -1,0 +1,21 @@
+﻿@model IEnumerable<SalonBookingSystem.Models.Service>
+@{
+    ViewData["Title"] = "Выберите услугу";
+}
+
+<h2>Выберите услугу</h2>
+<div class="row">
+    @foreach (var service in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@service.Name</h5>
+                    <p class="card-text">@service.Description</p>
+                    <p><strong>@service.Price.ToString("C")</strong> · @service.DurationMinutes мин.</p>
+                    <a asp-action="SelectSpecialist" asp-route-serviceId="@service.Id" class="btn btn-primary">Выбрать</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

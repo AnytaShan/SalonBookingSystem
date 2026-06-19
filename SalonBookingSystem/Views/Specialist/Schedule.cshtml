@@ -1,0 +1,49 @@
+﻿@model IEnumerable<IGrouping<DateTime, SalonBookingSystem.Models.Appointment>>
+@{
+    ViewData["Title"] = "Моё расписание";
+}
+
+<h2>Моё расписание</h2>
+
+@if (!Model.Any())
+{
+    <p>Нет предстоящих записей.</p>
+}
+else
+{
+    foreach (var dayGroup in Model)
+    {
+        <h3>@dayGroup.Key.ToString("dddd, d MMMM yyyy")</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Время</th>
+                    <th>Услуга</th>
+                    <th>Клиент</th>
+                    <th>Статус</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var app in dayGroup.OrderBy(a => a.StartTime))
+                {
+                    <tr>
+                        <td>@app.StartTime.ToString("HH:mm")</td>
+                        <td>@app.Service.Name</td>
+                        <td>@app.User.FirstName @app.User.LastName</td>
+                        <td>@app.Status</td>
+                        <td>
+                            @if (app.Status == AppointmentStatus.Confirmed)
+                            {
+                                <form method="post" asp-action="CompleteAppointment">
+                                    <input type="hidden" name="id" value="@app.Id" />
+                                    <button class="btn btn-sm btn-success">Выполнено</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

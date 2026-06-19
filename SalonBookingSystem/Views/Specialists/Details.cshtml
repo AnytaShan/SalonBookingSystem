@@ -1,0 +1,27 @@
+﻿@model SalonBookingSystem.Models.Specialist
+@{
+    ViewData["Title"] = $"{Model.LastName} {Model.FirstName}";
+}
+
+<h2>@Model.LastName @Model.FirstName @Model.MiddleName</h2>
+<p><strong>О себе:</strong> @Model.Bio</p>
+<p><strong>Телефон:</strong> @Model.Phone</p>
+<p><strong>Email:</strong> @Model.Email</p>
+
+<h4>Оказываемые услуги</h4>
+@if (Model.SpecialistServices != null && Model.SpecialistServices.Any())
+{
+    <ul>
+        @foreach (var ss in Model.SpecialistServices)
+        {
+            <li>@ss.Service.Name — @ss.Service.Price.ToString("C") (@ss.Service.DurationMinutes мин.)</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Нет услуг.</p>
+}
+
+<a asp-action="SelectService" asp-controller="Appointments" asp-route-specialistId="@Model.Id" class="btn btn-success">Записаться к этому специалисту</a>
+<a asp-action="Index" class="btn btn-secondary">Назад к списку</a>

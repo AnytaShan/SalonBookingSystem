@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Вход";
+}
+
+<h2>Вход в личный кабинет</h2>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Телефон (логин)</label>
+        <input type="text" class="form-control" id="phone" name="phone" required />
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="password" name="password" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+    <a asp-action="Register" class="btn btn-link">Регистрация</a>
+</form>

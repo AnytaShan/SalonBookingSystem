@@ -1,0 +1,22 @@
+﻿@model SalonBookingSystem.Models.BotQuestion
+@{
+    ViewData["Title"] = "Редактирование вопроса-ответа";
+}
+
+<h2>Редактирование</h2>
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Keywords" class="form-label"></label>
+        <input asp-for="Keywords" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Answer" class="form-label"></label>
+        <textarea asp-for="Answer" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="mb-3 form-check">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

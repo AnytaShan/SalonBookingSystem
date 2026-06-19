@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SalonBookingSystem.Models.Specialist>
+@{
+    ViewData["Title"] = "Управление специалистами";
+}
+
+<h2>Специалисты</h2>
+<p>
+    <a asp-action="CreateSpecialist" class="btn btn-success">Добавить специалиста</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Телефон</th>
+            <th>Активен</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.LastName @item.FirstName @item.MiddleName</td>
+                <td>@item.Phone</td>
+                <td>@(item.IsActive ? "Да" : "Нет")</td>
+                <td>
+                    <a asp-action="EditSpecialist" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Ред.</a>
+                    <a asp-action="DeleteSpecialist" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

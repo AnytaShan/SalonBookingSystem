@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SalonBookingSystem.Models.BotQuestion>
+@{
+    ViewData["Title"] = "Управление чат-ботом";
+}
+
+<h2>Вопросы и ответы</h2>
+<p>
+    <a asp-action="CreateBotQuestion" class="btn btn-success">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ключевые слова</th>
+            <th>Ответ</th>
+            <th>Активен</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Keywords</td>
+                <td>@item.Answer</td>
+                <td>@(item.IsActive ? "Да" : "Нет")</td>
+                <td>
+                    <a asp-action="EditBotQuestion" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Ред.</a>
+                    <a asp-action="DeleteBotQuestion" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

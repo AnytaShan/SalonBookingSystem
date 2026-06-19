@@ -1,0 +1,32 @@
+﻿@model SalonBookingSystem.Models.Specialist
+@{
+    ViewData["Title"] = "Удаление специалиста";
+}
+
+<h2>Удаление специалиста</h2>
+<div class="alert alert-danger">
+    <h4>Вы уверены, что хотите удалить этого специалиста?</h4>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Фамилия</dt>
+        <dd class="col-sm-10">@Model.LastName</dd>
+        <dt class="col-sm-2">Имя</dt>
+        <dd class="col-sm-10">@Model.FirstName</dd>
+        <dt class="col-sm-2">Отчество</dt>
+        <dd class="col-sm-10">@Model.MiddleName</dd>
+        <dt class="col-sm-2">Телефон</dt>
+        <dd class="col-sm-10">@Model.Phone</dd>
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+        <dt class="col-sm-2">Активен</dt>
+        <dd class="col-sm-10">@(Model.IsActive ? "Да" : "Нет")</dd>
+    </dl>
+
+    <form asp-action="DeleteSpecialist" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a asp-action="Specialists" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>

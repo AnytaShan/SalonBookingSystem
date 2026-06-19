@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Онлайн-помощник";
+}
+
+<h2>Чат-бот салона</h2>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                💬 Виртуальный консультант
+            </div>
+            <div class="card-body" id="chatBox" style="height: 400px; overflow-y: auto; background-color: #f8f9fa;">
+                <div class="mb-2">
+                    <strong>Бот:</strong> Здравствуйте! Задайте мне вопрос, и я постараюсь помочь.
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="input-group">
+                    <input type="text" id="messageInput" class="form-control" placeholder="Введите сообщение..." />
+                    <button class="btn btn-primary" id="sendBtn">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h5>Примеры вопросов:</h5>
+        <ul>
+            <li>Как записаться?</li>
+            <li>Какие услуги?</li>
+            <li>Где находитесь?</li>
+            <li>Время работы</li>
+            <li>Отменить запись</li>
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function() {
+            // Отправка по клику
+            $('#sendBtn').click(sendMessage);
+            // Отправка по Enter
+            $('#messageInput').keypress(function(e) {
+                if (e.which == 13) sendMessage();
+            });
+
+            function sendMessage() {
+                var msg = $('#messageInput').val().trim();
+                if (msg === '') return;
+
+                // Добавляем сообщение пользователя в чат
+                $('#chatBox').append('<div class="mb-2 text-end"><strong>Вы:</strong> ' + escapeHtml(msg) + '</div>');
+
+                // Очищаем поле ввода
+                $('#messageInput').val('');
+
+                // AJAX запрос к серверу
+                $.ajax({
+                    url: '/Chat/SendMessage',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ text: msg }),
+                    success: function(response) {
+                        $('#chatBox').append('<div class="mb-2"><strong>Бот:</strong> ' + escapeHtml(response.reply) + '</div>');
+                        scrollToBottom();
+                    },
+                    error: function() {
+                        $('#chatBox').append('<div class="mb-2 text-danger"><strong>Бот:</strong> Произошла ошибка. Попробуйте позже.</div>');
+                        scrollToBottom();
+                    }
+                });
+            }
+
+            function escapeHtml(text) {
+                return $('<div>').text(text).html();
+            }
+
+            function scrollToBottom() {
+                var chatBox = document.getElementById('chatBox');
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+    </script>
+}

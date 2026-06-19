@@ -1,0 +1,24 @@
+﻿@model IEnumerable<SalonBookingSystem.Models.Specialist>
+@{
+    ViewData["Title"] = "Выберите специалиста";
+    int serviceId = (int)ViewBag.ServiceId;
+    string serviceName = (string)ViewBag.ServiceName;
+    int duration = (int)ViewBag.Duration;
+}
+
+<h2>Выберите специалиста для услуги "@serviceName"</h2>
+<p>Длительность: @duration мин.</p>
+<div class="row">
+    @foreach (var specialist in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@specialist.LastName @specialist.FirstName</h5>
+                    <p class="card-text">@specialist.Bio</p>
+                    <a asp-action="SelectDateTime" asp-route-serviceId="@serviceId" asp-route-specialistId="@specialist.Id" class="btn btn-primary">Выбрать время</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
